@@ -5,8 +5,10 @@ from sklearn.preprocessing import scale
 from sklearn.pipeline import make_pipeline
 from sklearn.linear_model import Ridge
 from sklearn.preprocessing import PolynomialFeatures
+import pickle
 
 DATA_FILE='data/forestfires.csv'
+MODEL='model.pickle'
 
 df=pd.read_csv(DATA_FILE)
 data=df.values
@@ -75,4 +77,5 @@ data_x=scale(data_x.astype(float))
 reg_model=make_pipeline(PolynomialFeatures(5), Ridge())
 reg_model.fit(data_x, data_y)
 # print('Done')
+pickle.dump(reg_model, open(MODEL, 'wb'))
 print('Regression score: '+str(reg_model.score(data_x, data_y)))
